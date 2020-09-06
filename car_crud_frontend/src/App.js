@@ -1,32 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.scss';
+import React from "react";
+import "./styles/App.scss";
 
-import Button from 'react-bootstrap/Button';
+//React-Bootstrap imports
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <div>
-        <Button variant="dark"> Test </Button>
-
-      </div>
-    </div>
-  );
-}
+const App = () => (
+  <Container fluid>
+    <Row className="justify-content-around">
+      <Col className="text-center" md={4}>
+        1 of 1
+      </Col>
+      <Col className="text-center" md={4}>
+        <Button variant="secondary"> Dark variant</Button>
+      </Col>
+    </Row>
+  </Container>
+);
 
 export default App;

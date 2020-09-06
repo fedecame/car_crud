@@ -1,8 +1,35 @@
-$theme-colors: (
-    "info": tomato,
-    "danger": teal,
-    "success": aqua,
-    "dark": rgba(117, 13, 13, 0.733)
-);
+/*! Themestr.app `Greyson` Bootstrap 4.3.1 theme */
+@import url(https://fonts.googleapis.com/css?family=Muli:200,300,400,700);
+$font-family-base: Muli;
+@import url(https://fonts.googleapis.com/css?family=Oswald:200,300,400,700);
+$headings-font-family: Oswald;
+
+$enable-grid-classes: false;
+$primary: #2f3c48;
+$secondary: #6f7f8c;
+$success: #3e4d59;
+$danger: #cc330d;
+$info: #5c8f94;
+$warning: #6e9fa5;
+$light: #eceeec;
+$dark: #1e2b37;
+
+$body-bg: #222;
+$body-color: #f6f2f2;
+
+/*! Import Bootstrap 4 variables */
+// @import "~bootstrap/scss/functions";
+// @import "~bootstrap/scss/variables";
+// @import "~bootstrap/scss/mixins";
+
+$enable-rounded: false;
+
+// $theme-colors: (
+//   "info": tomato,
+//   "danger": teal,
+//   "success": aqua,
+//   "dark": rgba(117, 13, 13, 0.733),
+//   "indigo": $indigo,
+// );
 
 @import "~bootstrap/scss/bootstrap";
