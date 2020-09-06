@@ -1,0 +1,8 @@
+$theme-colors: (
+    "info": tomato,
+    "danger": teal,
+    "success": aqua,
+    "dark": rgba(117, 13, 13, 0.733)
+);
+
+@import "~bootstrap/scss/bootstrap";
