@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles/App.scss";
 
 //React-Bootstrap imports
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Car from "./objects/Car";
+// import Car from "./objects/Car";
 
 //Components imports
 import CarTable from "./components/CarTable";
@@ -15,22 +15,33 @@ import CarGrid from "./components/CarGrid";
 
 const App = () => {
   const [showModal, setShowModal] = useState(false);
-  const [cars, setCars] = useState([
-    new Car("Chevrolet", "Corsa", "Light Grey", "ASD 123"),
-    new Car("Fiat", "Siena", "Black", "FFF 333"),
-    new Car(
-      "MarcaXKJASHDKJSHKD",
-      "ModeloALSDJLASDJLADJS",
-      "ColorLADJOAISDJALSD",
-      "PATENTE ALSDJALSDJLASDJLASDJLASDJLKAS"
-    ),
-  ]);
-  // const [cars, setCars] = useState([]);
+  // const [cars, setCars] = useState([
+  //   new Car("Chevrolet", "Corsa", "Light Grey", "ASD 123"),
+  //   new Car("Fiat", "Siena", "Black", "FFF 333"),
+  //   new Car(
+  //     "Marca Inventada",
+  //     "Modelo Inventado",
+  //     "Color Inventado",
+  //     "Patente Inventada"
+  //   ),
+  // ]);
+  const [cars, setCars] = useState([]);
 
   const [selectedCar, setSelectedCar] = useState(null);
 
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
+
+  useEffect(() => {
+    const storedCars = localStorage.getItem("cars-react");
+    if (storedCars) {
+      setCars(JSON.parse(localStorage.getItem("cars-react")));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("cars-react", JSON.stringify(cars));
+  }, [cars]);
 
   return (
     <Container>

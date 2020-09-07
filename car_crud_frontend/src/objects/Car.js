@@ -1,8 +1,6 @@
-import { v4 as uuidv4 } from "uuid";
-
 export default class Car {
-  constructor(brand, model, color, licensePlate) {
-    this._id = uuidv4();
+  constructor(id, brand, model, color, licensePlate) {
+    this._id = id;
     this._brand = brand;
     this._model = model;
     this._color = color;
@@ -31,6 +29,10 @@ export default class Car {
   }
 
   //Setters
+  set id(newId) {
+    return (this._id = newId);
+  }
+
   set brand(newBrand) {
     return (this._brand = newBrand);
   }

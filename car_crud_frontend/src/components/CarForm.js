@@ -17,6 +17,10 @@ const CarForm = ({ selectedCar, handleCloseModal, setCars }) => {
   const [model, setModel] = useState("");
   const [color, setColor] = useState("");
   const [licensePlate, setLicensePlate] = useState("");
+  const [invalidBrand, setInvalidBrand] = useState(false);
+  const [invalidModel, setInvalidModel] = useState(false);
+  const [invalidColor, setInvalidColor] = useState(false);
+  const [invalidLicensePlate, setInvalidLicensePlate] = useState(false);
   const [validForm, setValidForm] = useState(false);
 
   useEffect(() => {
@@ -69,10 +73,55 @@ const CarForm = ({ selectedCar, handleCloseModal, setCars }) => {
   };
 
   const validateInputs = (event) => {
-    if (brand && model && color && licensePlate) {
+    if (
+      brand &&
+      brand.trim() &&
+      model &&
+      model.trim() &&
+      color &&
+      color.trim() &&
+      licensePlate &&
+      licensePlate.trim()
+    ) {
       setValidForm(true);
     } else {
       setValidForm(false);
+    }
+  };
+
+  const validateBrand = (event) => {
+    if (event.target.value.trim()) {
+      setInvalidBrand(false);
+      validateInputs();
+    } else {
+      setInvalidBrand(true);
+    }
+  };
+
+  const validateModel = (event) => {
+    if (event.target.value.trim()) {
+      setInvalidModel(false);
+      validateInputs();
+    } else {
+      setInvalidModel(true);
+    }
+  };
+
+  const validateColor = (event) => {
+    if (event.target.value.trim()) {
+      setInvalidColor(false);
+      validateInputs();
+    } else {
+      setInvalidColor(true);
+    }
+  };
+
+  const validateLicensePlate = (event) => {
+    if (event.target.value.trim()) {
+      setInvalidLicensePlate(false);
+      validateInputs();
+    } else {
+      setInvalidLicensePlate(true);
     }
   };
 
@@ -84,11 +133,11 @@ const CarForm = ({ selectedCar, handleCloseModal, setCars }) => {
           required
           type="text"
           placeholder="Enter car's brand"
-          value={brand}
+          value={brand || ""}
           onChange={handleBrandChange}
-          onBlur={validateInputs}
-          isInvalid={!brand}
-          isValid={brand}
+          onBlur={validateBrand}
+          isInvalid={invalidBrand}
+          isValid={brand && brand.trim()}
         />
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">
@@ -102,11 +151,11 @@ const CarForm = ({ selectedCar, handleCloseModal, setCars }) => {
           required
           type="text"
           placeholder="Enter car's model"
-          value={model}
+          value={model || ""}
           onChange={handleModelChange}
-          onBlur={validateInputs}
-          isInvalid={!model}
-          isValid={model}
+          onBlur={validateModel}
+          isInvalid={invalidModel}
+          isValid={model && model.trim()}
         />
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">
@@ -120,11 +169,11 @@ const CarForm = ({ selectedCar, handleCloseModal, setCars }) => {
           required
           type="text"
           placeholder="Enter car's color"
-          value={color}
+          value={color || ""}
           onChange={handleColorChange}
-          onBlur={validateInputs}
-          isInvalid={!color}
-          isValid={color}
+          onBlur={validateColor}
+          isInvalid={invalidColor}
+          isValid={color && color.trim()}
         />
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">
@@ -138,11 +187,11 @@ const CarForm = ({ selectedCar, handleCloseModal, setCars }) => {
           required
           type="text"
           placeholder="Enter car's license plate"
-          value={licensePlate}
+          value={licensePlate || ""}
           onChange={handleLicensePlateChange}
-          onBlur={validateInputs}
-          isInvalid={!licensePlate}
-          isValid={licensePlate}
+          onBlur={validateLicensePlate}
+          isInvalid={invalidLicensePlate}
+          isValid={licensePlate && licensePlate.trim()}
         />
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">

@@ -41,7 +41,7 @@ const CarGrid = ({ cars, setCars, handleShowModal, setSelectedCar }) => {
           <CardDeck key={index} id="car-grid">
             {cards.map((card, pairIndex) => (
               <CarCard
-                key={card.id}
+                key={index + "car-grid" + pairIndex}
                 card={card}
                 pairIndex={pairIndex}
                 handleShowModal={handleShowModal}

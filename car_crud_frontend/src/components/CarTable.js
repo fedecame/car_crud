@@ -48,7 +48,7 @@ const makeCarRow = (
   setSelectedCar,
   confirmRemove
 ) => (
-  <tr key={car.id}>
+  <tr key={carsIndex + "car-table" + car.id}>
     {Object.values(car).map((carAttValue, attsIndex) => {
       if (attsIndex === 0) {
         return <td key={attsIndex}>{carsIndex + 1}</td>;
