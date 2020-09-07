@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles/App.scss";
 
 //React-Bootstrap imports
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import Car from "./components/Car";
+import Car from "./objects/Car";
 
 //Components imports
 import CarTable from "./components/CarTable";
-import NewCarModal from "./components/NewCarModal";
+import CarModal from "./components/CarModal";
+import OpenModalButton from "./components/OpenModalButton";
+import CarGrid from "./components/CarGrid";
 
 const App = () => {
-  const cars = [
+  const [showModal, setShowModal] = useState(false);
+  const [cars, setCars] = useState([
     new Car("Chevrolet", "Corsa", "Light Grey", "ASD 123"),
     new Car("Fiat", "Siena", "Black", "FFF 333"),
     new Car(
@@ -22,7 +24,13 @@ const App = () => {
       "ColorLADJOAISDJALSD",
       "PATENTE ALSDJALSDJLASDJLASDJLASDJLKAS"
     ),
-  ];
+  ]);
+  // const [cars, setCars] = useState([]);
+
+  const [selectedCar, setSelectedCar] = useState(null);
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
 
   return (
     <Container>
@@ -33,42 +41,60 @@ const App = () => {
           </header>
         </Col>
       </Row>
-
       <Row>
         <Col>
-          <NewCarModal />
+          <CarModal
+            showModal={showModal}
+            handleCloseModal={handleCloseModal}
+            selectedCar={selectedCar}
+            setCars={setCars}
+          />
         </Col>
       </Row>
-
+      <Row>
+        <Col
+          className={`d-flex justify-content-${
+            !cars.length ? "center" : "end"
+          }`}
+        >
+          <OpenModalButton
+            handleShowModal={handleShowModal}
+            setSelectedCar={setSelectedCar}
+          />
+        </Col>
+      </Row>
       <Row>
         <Col>
-          <CarTable cars={cars} />
-        </Col>
-      </Row>
+          {!!cars.length && (
+            <CarTable
+              cars={cars}
+              setCars={setCars}
+              handleShowModal={handleShowModal}
+              setSelectedCar={setSelectedCar}
+            />
+          )}
 
-      <Row className="justify-content-around">
-        <Col className="text-center" md={4}>
-          1 of 1
-        </Col>
-        <Col className="text-center" md={4}>
-          <Button variant="secondary"> Dark variant</Button>
+          {!cars.length && (
+            <div className="d-inline">
+              <h4 className="text-center">
+                No cars yet. You may want to add one
+              </h4>
+            </div>
+          )}
         </Col>
       </Row>
-      {/* <footer>
-        <div>
-          Iconos diseñados por{" "}
-          <a
-            href="https://www.flaticon.es/icono-gratis/seguro_832824"
-            title="Kiranshastry"
-          >
-            Kiranshastry
-          </a>{" "}
-          from{" "}
-          <a href="https://www.flaticon.es/" title="Flaticon">
-            www.flaticon.es
-          </a>
-        </div>
-      </footer> */}
+      <Row>
+        <Col className="mx-5 my-2">
+          {!!cars.length && (
+            <CarGrid
+              cars={cars}
+              setCars={setCars}
+              handleShowModal={handleShowModal}
+              setSelectedCar={setSelectedCar}
+            />
+          )}
+        </Col>
+      </Row>
     </Container>
   );
 };

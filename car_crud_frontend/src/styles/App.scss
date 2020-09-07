@@ -6,17 +6,24 @@
 .table-icons {
   width: 1.6rem;
   height: auto;
-  transition: ease-in 0.15s all;
+  transition: ease-in 0.2s all;
 }
 
-.add-car-btn {
-  transition: ease-in 0.15s all;
+.confirm-car-form-btn,
+.cancel-car-form-btn,
+.open-add-car-btn,
+.remove-car-btn,
+.edit-car-btn {
+  transition: ease-in 0.2s all;
 }
 
 .remove-icon {
   &:hover,
   &:focus {
     fill: $danger;
+  }
+  &:hover {
+    cursor: pointer;
   }
 }
 
@@ -25,14 +32,95 @@
   &:focus {
     fill: $info;
   }
+  &:hover {
+    cursor: pointer;
+  }
 }
 
-.add-car-btn {
+.open-add-car-btn {
   &:hover,
   &:focus {
     color: $primary;
     .add-icon {
       fill: $primary;
     }
+  }
+}
+
+.confirm-car-form-btn {
+  &:hover,
+  &:focus {
+    color: $warning;
+    .confirm-icon {
+      fill: $warning;
+    }
+  }
+  &:disabled {
+    color: $light;
+    .confirm-icon {
+      fill: $light;
+    }
+  }
+}
+
+.cancel-car-form-btn {
+  &:hover,
+  &:focus {
+    color: $danger;
+    .cancel-icon {
+      fill: $danger;
+    }
+  }
+}
+
+.remove-car-btn {
+  &:hover,
+  &:focus {
+    color: $danger;
+    .remove-icon {
+      fill: $danger;
+    }
+  }
+}
+
+.edit-car-btn {
+  &:hover,
+  &:focus {
+    color: $warning;
+    .edit-icon {
+      fill: $warning;
+    }
+  }
+}
+
+button.close {
+  color: $body-color;
+  text-shadow: 0 1px 0 $light;
+  opacity: 0.8;
+}
+
+.valid-feedback {
+  color: $info;
+}
+
+@include media-breakpoint-up(lg) {
+  #car-grid {
+    display: none;
+  }
+}
+
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins/_breakpoints";
+
+#car-table {
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
+}
+
+@media (max-width: 678px) {
+  .card-deck {
+    display: block;
   }
 }

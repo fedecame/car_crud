@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "react-bootstrap/Table";
 
 //Icons imports
@@ -8,6 +8,7 @@ import { ReactComponent as EditIcon } from "../icons/edit.svg";
 
 //Components impots
 import ClickableIcon from "./ClickableIcon";
+import ConfirmationDialog from "./ConfirmationDialog";
 
 const makeTableHeader = (car) => {
   const removeAttUnderscore = (key) => key.slice(1);
@@ -27,51 +28,100 @@ const makeTableHeader = (car) => {
     <thead>
       <tr>
         <th>#</th>
-        {Object.keys(car).map((carAttKey, index) => (
-          <th key={index} className="text-capitalize text-center">
-            {formatAttsForHeaders(carAttKey)}
-          </th>
-        ))}
+        {Object.keys(car)
+          .slice(1)
+          .map((carAttKey, index) => (
+            <th key={index} className="text-capitalize text-center">
+              {formatAttsForHeaders(carAttKey)}
+            </th>
+          ))}
         <th className="text-center">Actions</th>
       </tr>
     </thead>
   );
 };
 
-const makeCarRow = (car, index) => (
-  <tr key={index}>
-    <td>{index + 1}</td>
-    {Object.values(car).map((carAttValue, index) => (
-      <td key={index}>{carAttValue}</td>
-    ))}
+const makeCarRow = (
+  car,
+  carsIndex,
+  handleShowModal,
+  setSelectedCar,
+  confirmRemove
+) => (
+  <tr key={car.id}>
+    {Object.values(car).map((carAttValue, attsIndex) => {
+      if (attsIndex === 0) {
+        return <td key={attsIndex}>{carsIndex + 1}</td>;
+      }
+      return <td key={attsIndex}>{carAttValue}</td>;
+    })}
     <td className="d-flex justify-content-between">
       <ClickableIcon
         IconComponent={RemoveIcon}
         fillColor="#FFF"
-        onClickCallback={() => console.log("remove current car")}
+        onClickCallback={() => {
+          confirmRemove(car);
+        }}
         classes="table-icons remove-icon"
       />
       <ClickableIcon
         IconComponent={EditIcon}
         fillColor="#FFF"
-        onClickCallback={() => console.log("edit current car")}
+        onClickCallback={() => {
+          setSelectedCar(car);
+          handleShowModal();
+        }}
         classes="table-icons edit-icon"
       />
     </td>
   </tr>
 );
 
-const makeTableBody = (cars) => (
-  <tbody>{cars.map((car, index) => makeCarRow(car, index))}</tbody>
+const makeTableBody = (
+  cars,
+  handleShowModal,
+  setSelectedCar,
+  confirmRemove
+) => (
+  <tbody>
+    {cars.map((car, index) =>
+      makeCarRow(car, index, handleShowModal, setSelectedCar, confirmRemove)
+    )}
+  </tbody>
 );
 
-const CarTable = ({ cars }) => {
+const CarTable = ({ cars, setCars, handleShowModal, setSelectedCar }) => {
+  const [carToBeRemoved, setCarToBeRemoved] = useState(null);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [dialogQuestion, setDialogQuestion] = useState("");
+
+  const confirmRemove = (newCarToBeRemoved) => {
+    setCarToBeRemoved(newCarToBeRemoved);
+    setDialogQuestion(
+      `Do you confirm removing car with id ${newCarToBeRemoved.id}?`
+    );
+    setShowConfirmDialog(true);
+  };
+
+  const removeCar = () => {
+    setCars((prevCars) =>
+      prevCars.filter((car) => car.id !== carToBeRemoved.id)
+    );
+    setCarToBeRemoved(null);
+  };
+
   return (
-    <div className="mx-5 my-2">
+    <div className="mx-5 my-2" id="car-table">
       <Table striped bordered hover responsive variant="dark">
         {makeTableHeader(cars[0])}
-        {makeTableBody(cars)}
+        {makeTableBody(cars, handleShowModal, setSelectedCar, confirmRemove)}
       </Table>
+      <ConfirmationDialog
+        showConfirmDialog={showConfirmDialog}
+        setShowConfirmDialog={setShowConfirmDialog}
+        dialogQuestion={dialogQuestion}
+        callbackRemove={removeCar}
+      />
     </div>
   );
 };
